@@ -11,6 +11,12 @@ class PinCodeTextField extends StatefulWidget {
   /// you already know what it does i guess :P default is false
   final bool obscureText;
 
+  /// Character used for hint text. Empty if null.
+  final String hintCharacter;
+
+  /// the style of the hint, default use [textStyle] with [ThemeData.hintColor]
+  final TextStyle hintTextStyle;
+
   /// returns the current typed text in the fields
   final ValueChanged<String> onChanged;
 
@@ -125,6 +131,8 @@ class PinCodeTextField extends StatefulWidget {
     @required this.length,
     this.controller,
     this.obscureText = false,
+    this.hintCharacter,
+    this.hintTextStyle,
     @required this.onChanged,
     this.onCompleted,
     this.backgroundColor = Colors.white,
@@ -583,11 +591,18 @@ class _PinCodeTextFieldState extends State<PinCodeTextField>
                 }
               },
               child: Text(
-                widget.obscureText && _inputList[i].isNotEmpty
-                    ? "●"
-                    : _inputList[i],
+                _inputList[i].isNotEmpty
+                    ? widget.obscureText
+                        ? "●"
+                        : _inputList[i]
+                    : widget.hintCharacter ?? _inputList[i],
                 key: ValueKey(_inputList[i]),
-                style: widget.textStyle,
+                style: _inputList[i].isNotEmpty
+                    ? widget.textStyle
+                    : widget.hintTextStyle ??
+                        widget.textStyle.copyWith(
+                          color: Theme.of(context).hintColor,
+                        ),
               ),
             ),
           ),
