@@ -125,6 +125,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         color: Colors.green.shade600,
                         fontWeight: FontWeight.bold,
                       ),
+                      hintCharacter: '•',
                       length: 6,
                       obscureText: false,
                       animationType: AnimationType.fade,
